@@ -12,11 +12,14 @@
     "author": "chad",
     "license": "ISC",
     "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "crypto": "^1.0.1",
         "dotenv": "^16.0.1",
         "express": "^4.18.1",
         "mongoose": "^6.4.4",
         "morgan": "^1.10.0",
-        "slugify": "^1.6.5"
+        "slugify": "^1.6.5",
+        "validator": "^13.7.0"
     },
     "devDependencies": {
         "eslint": "^8.19.0",
