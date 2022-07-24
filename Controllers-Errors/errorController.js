@@ -21,6 +21,14 @@ const handleValidationErrorDB = err => {
     return new AppError(message, 400);
 };
 
+//! ( TOKEN)
+//Token Invalid Token throw this Error in production
+const handleJWTError = () => new AppError("Invalid token. Please login Again", 401);
+
+//Token expired throw this Error in production
+const handleJWTExpiredError = () => new AppError("Your token has expired! Please log in again", 401);
+//! END
+
 const sendErrorDev = (err, res) => {
     res.status(err.statusCode).json({
         status: err.status,
@@ -58,13 +66,26 @@ module.exports = (err, req, res, next) => {
     err.status = err.status || 'error';
 
     if (process.env.NODE_ENV === 'development') {
+        //This error will be thrown in dev mode
+        // if (error.name === 'jsonWebTokenError') error = handleJWTError()
+        // if (error.name === 'TokenExpiredError') error = handleJWTExpiredError()
+
         sendErrorDev(err, res);
+
     } else if (process.env.NODE_ENV === 'production') {
-        let error = {...err };
+        let error = { ...err };
 
         if (error.name === 'CastError') error = handleCastErrorDB(error);
         if (error.code === 11000) error = handleDuplicateFieldsDB(error);
         if (error.name === 'ValidationError') error = handleValidationErrorDB(error);
+
+
+        //! ( TOKEN)
+        //This Error it when you are working with Authentication
+        //Note: this Error will be thrown in production
+        if (error.name === 'jsonWebTokenError') error = handleJWTError() // this throw an Error if the token is diff from the one that the user logged in with
+
+        if (error.name === 'TokenExpiredError') error = handleJWTExpiredError() // this throw the Error if the token has expired you u try & access the application
 
         sendErrorProd(error, res);
     }
