@@ -5,6 +5,7 @@ GET STARTED
 3 //=> npm i nodemon
 3 //=> npm i dotenv  
 3 //=> npm i morgan  
+//=> npm i npm i nodemailer
 
 
 //Dev Dependencies
@@ -52,3 +53,8 @@ Mongo DB Authentication course Link
 -------------------------------------
 // => https://university.mongodb.com/courses/M150/about
 // => https://university.mongodb.com/dashboard
+
+
+For Reseting  emails 
+---------------------
+// => https://mailtrap.io/inboxes/1830432/messages
