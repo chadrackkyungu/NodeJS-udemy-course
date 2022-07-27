@@ -75,15 +75,6 @@ userSchema.pre('save', function (next) {
     next();
 });
 
-//*(6)  100% Working
-//This middleware will check if the user is active then return all the user that are active only. then u can perform anything with that
-userSchema.pre(/^find/, function (next) {
-    //this points to the current query
-    this.find({ active: { $ne: false } }) //* $ne = not equal to false
-    next();
-});
-
-
 //*(2)
 //this comparing the password that is inside the DB to the new user password input by the user
 userSchema.methods.correctPassword = async function (candidatePassword, userPassword) {

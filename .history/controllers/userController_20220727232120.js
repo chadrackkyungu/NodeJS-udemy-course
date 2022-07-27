@@ -11,7 +11,7 @@ const filterObj = (obj, ...allowedFields) => {
 };
 
 
-//Get all user
+//Functions
 exports.getAllUsers = catchAsync(async (req, res, next) => {
     const users = await User.find()
 
@@ -24,7 +24,7 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
     })
 })
 
-//* 100% Working
+
 //Update the user profile
 exports.updateMe = catchAsync(async (req, res, next) => {
 
@@ -34,7 +34,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     }
 
     // 2) Filtered out unwanted fields names that are not allowed to be updated
-    const filteredBody = filterObj(req.body, 'name', 'email'); //This means update only "name & email if the user try to update another field he want be able "
+    const filteredBody = filterObj(req.body, 'name', 'email');
 
     // 3) Update user document
     const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
@@ -47,16 +47,6 @@ exports.updateMe = catchAsync(async (req, res, next) => {
         data: {
             user: updatedUser
         }
-    });
-});
-
-//* Deleting my own Profile from the system  100% Working
-exports.deleteMe = catchAsync(async (req, res, next) => {
-    await User.findByIdAndUpdate(req.user.id, { active: false });
-
-    res.status(204).json({
-        status: 'success',
-        data: null
     });
 });
 

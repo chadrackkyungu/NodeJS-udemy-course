@@ -48,7 +48,6 @@ const userSchema = new mongoose.Schema({
 
     //* this is the last part, when u want to delete the user profile
     //wen u want to delete a user, it will set that user to not being active instead of deleting him straight away, this is perfect
-    //by default all user will be active, they becomes inactive after they hv deleted they are account
     active: {
         type: Boolean,
         default: true,
@@ -74,15 +73,6 @@ userSchema.pre('save', function (next) {
     this.passwordChangedAt = Date.now() - 1000;
     next();
 });
-
-//*(6)  100% Working
-//This middleware will check if the user is active then return all the user that are active only. then u can perform anything with that
-userSchema.pre(/^find/, function (next) {
-    //this points to the current query
-    this.find({ active: { $ne: false } }) //* $ne = not equal to false
-    next();
-});
-
 
 //*(2)
 //this comparing the password that is inside the DB to the new user password input by the user

@@ -75,7 +75,7 @@ userSchema.pre('save', function (next) {
     next();
 });
 
-//*(6)  100% Working
+//*(6)
 //This middleware will check if the user is active then return all the user that are active only. then u can perform anything with that
 userSchema.pre(/^find/, function (next) {
     //this points to the current query

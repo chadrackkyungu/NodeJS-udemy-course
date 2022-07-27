@@ -1,17 +1,7 @@
 const User = require('./../models/useModel');
 const catchAsync = require('./../utils/catchAsync');
-const AppError = require('./../utils/appError');
 
-const filterObj = (obj, ...allowedFields) => {
-    const newObj = {};
-    Object.keys(obj).forEach(el => {
-        if (allowedFields.includes(el)) newObj[el] = obj[el];
-    });
-    return newObj;
-};
-
-
-//Get all user
+//Functions
 exports.getAllUsers = catchAsync(async (req, res, next) => {
     const users = await User.find()
 
@@ -24,8 +14,7 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
     })
 })
 
-//* 100% Working
-//Update the user profile
+
 exports.updateMe = catchAsync(async (req, res, next) => {
 
     // 1) Create error if user POSTs password data
@@ -34,9 +23,9 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     }
 
     // 2) Filtered out unwanted fields names that are not allowed to be updated
-    const filteredBody = filterObj(req.body, 'name', 'email'); //This means update only "name & email if the user try to update another field he want be able "
+    const filteredBody = filterObj(req.body, 'name', 'email');
 
-    // 3) Update user document
+    // // 3) Update user document
     const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
         new: true,
         runValidators: true
@@ -44,19 +33,9 @@ exports.updateMe = catchAsync(async (req, res, next) => {
 
     res.status(200).json({
         status: 'success',
-        data: {
-            user: updatedUser
-        }
-    });
-});
-
-//* Deleting my own Profile from the system  100% Working
-exports.deleteMe = catchAsync(async (req, res, next) => {
-    await User.findByIdAndUpdate(req.user.id, { active: false });
-
-    res.status(204).json({
-        status: 'success',
-        data: null
+        // data: {
+        //     user: updatedUser
+        // }
     });
 });
 

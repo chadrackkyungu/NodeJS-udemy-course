@@ -50,7 +50,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     });
 });
 
-//* Deleting my own Profile from the system  100% Working
+
 exports.deleteMe = catchAsync(async (req, res, next) => {
     await User.findByIdAndUpdate(req.user.id, { active: false });
 

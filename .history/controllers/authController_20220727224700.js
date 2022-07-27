@@ -14,18 +14,6 @@ const signToken = id => {
     )
 }
 
-const createSendToken = (user, statusCode, res) => {
-    const token = signToken(user._id);
-
-    res.status(statusCode).json({
-        status: 'success',
-        token,
-        data: {
-            user
-        }
-    });
-};
-
 exports.signup = catchAsync(async (req, res, next) => {
 
     const newUser = await User.create({
@@ -36,7 +24,15 @@ exports.signup = catchAsync(async (req, res, next) => {
         role: req.body.role
     });
 
-    createSendToken(newUser, 201, res);
+    const token = signToken(newUser._id)
+
+    res.status(201).json({
+        status: 'success',
+        token,
+        data: {
+            user: newUser
+        }
+    })
 })
 
 exports.login = catchAsync(async (req, res, next) => {
@@ -55,7 +51,11 @@ exports.login = catchAsync(async (req, res, next) => {
         return next(new AppError("Please provide correct password", 401));
     }
 
-    createSendToken(user, 200, res);
+    const token = signToken(user._id)
+    res.status(200).json({
+        status: 'success',
+        token
+    })
 })
 
 //this is a middleware function that will protect our Tour Routes. if the user does not login, they can't access the [tour routes]
@@ -165,7 +165,13 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
     await user.save();
 
     // 4) Log the user in, send JWT
-    createSendToken(user, 200, res);
+    // createSendToken(user, 200, res);
+    const token = signToken(user._id);
+
+    res.status(200).json({
+        status: 'success',
+        token
+    })
 })
 
 //! 100% working
@@ -185,5 +191,14 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
     user.passwordConfirm = req.body.passwordConfirm;
     const users = await user.save(); //this is the best practiced than using update when working with authentication 
 
-    createSendToken(user, 200, res);
+    const token = signToken(users._id);
+
+    //4) Log user in, sent JWT
+    res.status(200).json({
+        status: 'success',
+        token: token,
+        data: {
+            users
+        }
+    })
 })

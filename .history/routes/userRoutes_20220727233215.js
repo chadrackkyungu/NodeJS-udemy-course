@@ -10,7 +10,7 @@ router.post('/forgotPassword', forgotPassword);
 router.patch('/resetPassword/:token', resetPassword);
 router.patch('/updateMyPassword', protect, updatePassword);
 router.patch('/updateMe', protect, updateMe);
-router.delete('/deleteMe', protect, deleteMe);
+router.patch('/deleteMe', protect, deleteMe);
 
 //USER API
 router.route('/').get(getAllUsers).post(createUser);
