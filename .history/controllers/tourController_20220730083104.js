@@ -59,7 +59,7 @@ exports.createNewTour = catchAsync(async (req, res, next) => {
 exports.getTourById = catchAsync(async (req, res, next) => {
     // try {
     // const tour = await Tour.findById(req.params.id); //* lecturer 153 to populate the guides  IDs to object users
-    const tour = await Tour.findById(req.params.id)
+    const tour = await Tour.findById(req.params.id).populate({ path: 'guides', select: '-_v -passwordChangeAt' }) //* [guides] name of the fields
 
     //if the user query a tour with an ID that does not exist throw this Error
     if (!tour) {

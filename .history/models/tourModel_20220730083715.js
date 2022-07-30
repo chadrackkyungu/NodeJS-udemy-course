@@ -176,12 +176,12 @@ tourSchema.pre(/^find/, function (next) {
 
 
 //Middleware //* lecturer 153
-//This means every time the user makes a query like find populate the ID reference by the real data of that reference and exclude [-__v & -passwordChangedAt]
 tourSchema.pre(/^find/, function (next) {
     this.populate({
         path: 'guides',
         select: '-__v -passwordChangedAt'
     });
+
     next();
 });
 

@@ -114,7 +114,7 @@ const tourSchema = new mongoose.Schema({
     guides: [
         {
             type: mongoose.Schema.ObjectId,
-            ref: 'User' //this is the name of user Tour table(file) in our Database
+            ref: 'User'
         }
 
     ]
@@ -173,18 +173,6 @@ tourSchema.pre(/^find/, function (next) {
     this.start = Date.now();
     next();
 });
-
-
-//Middleware //* lecturer 153
-//This means every time the user makes a query like find populate the ID reference by the real data of that reference and exclude [-__v & -passwordChangedAt]
-tourSchema.pre(/^find/, function (next) {
-    this.populate({
-        path: 'guides',
-        select: '-__v -passwordChangedAt'
-    });
-    next();
-});
-
 
 tourSchema.post(/^find/, function (docs, next) {
     console.log(`Query took ${Date.now() - this.start} milliseconds!`);

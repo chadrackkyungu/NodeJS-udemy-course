@@ -1,9 +1,6 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
 
-//* lecturer 151
-// const User = require('./useModel'); //not needed anymore 
-
 const tourSchema = new mongoose.Schema({
     // this means if i try to send data without name & price, it will throw an error
     name: {
@@ -108,16 +105,6 @@ const tourSchema = new mongoose.Schema({
             day: Number
         }
     ],
-    //* here this array will contain all the users ID that are Guiding this tour
-    //guides: Array, //* array of user IDs  embedding
-    //* Normalization
-    guides: [
-        {
-            type: mongoose.Schema.ObjectId,
-            ref: 'User' //this is the name of user Tour table(file) in our Database
-        }
-
-    ]
     //*end
 
 },
@@ -141,18 +128,6 @@ tourSchema.pre('save', function (next) {
     next();
 });
 
-//*lecturer 151  middleware
-//* i'm comparing the user ID that coming from the postman with the one inside [DB users] the if the are the same replace those IDs with this users
-//this code here use it if u wanna embedding something(de normalization)
-// tourSchema.pre('save', async function (next) {
-//     const guidesPromises = this.guides.map(async id => await User.findById(id));
-//     this.guides = await Promise.all(guidesPromises);
-//     next();
-// });
-
-
-
-
 /// [this slug it wen u are creating to the database]
 
 // tourSchema.pre('save', function(next) {
@@ -173,18 +148,6 @@ tourSchema.pre(/^find/, function (next) {
     this.start = Date.now();
     next();
 });
-
-
-//Middleware //* lecturer 153
-//This means every time the user makes a query like find populate the ID reference by the real data of that reference and exclude [-__v & -passwordChangedAt]
-tourSchema.pre(/^find/, function (next) {
-    this.populate({
-        path: 'guides',
-        select: '-__v -passwordChangedAt'
-    });
-    next();
-});
-
 
 tourSchema.post(/^find/, function (docs, next) {
     console.log(`Query took ${Date.now() - this.start} milliseconds!`);

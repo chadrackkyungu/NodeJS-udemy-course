@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const slugify = require('slugify');
 
 //* lecturer 151
-// const User = require('./useModel'); //not needed anymore 
+const User = require('./useModel');
 
 const tourSchema = new mongoose.Schema({
     // this means if i try to send data without name & price, it will throw an error
@@ -109,15 +109,7 @@ const tourSchema = new mongoose.Schema({
         }
     ],
     //* here this array will contain all the users ID that are Guiding this tour
-    //guides: Array, //* array of user IDs  embedding
-    //* Normalization
-    guides: [
-        {
-            type: mongoose.Schema.ObjectId,
-            ref: 'User' //this is the name of user Tour table(file) in our Database
-        }
-
-    ]
+    guides: Array, //* array of user IDs
     //*end
 
 },
@@ -173,18 +165,6 @@ tourSchema.pre(/^find/, function (next) {
     this.start = Date.now();
     next();
 });
-
-
-//Middleware //* lecturer 153
-//This means every time the user makes a query like find populate the ID reference by the real data of that reference and exclude [-__v & -passwordChangedAt]
-tourSchema.pre(/^find/, function (next) {
-    this.populate({
-        path: 'guides',
-        select: '-__v -passwordChangedAt'
-    });
-    next();
-});
-
 
 tourSchema.post(/^find/, function (docs, next) {
     console.log(`Query took ${Date.now() - this.start} milliseconds!`);

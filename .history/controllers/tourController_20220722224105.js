@@ -4,7 +4,7 @@ const APIFeatures = require('./../utils/apiFeatures');
 const catchAsync = require('./../utils/catchAsync');
 
 //Functions
-exports.aliasTour = async (req, res, next) => {
+exports.aliasTour = async(req, res, next) => {
     req.query.limit = '5'; //i'm making a request of 5 fields only not the all API object
     req.query.sort = '-ratingsAverage,price';
     //here i'm specifying the fields that should be returned
@@ -12,7 +12,7 @@ exports.aliasTour = async (req, res, next) => {
     next();
 };
 
-exports.getAllTours = catchAsync(async (req, res, next) => {
+exports.getAllTours = catchAsync(async(req, res, next) => {
     // try {
     // EXECUTE QUERY
     const features = new APIFeatures(Tour.find(), req.query)
@@ -38,7 +38,7 @@ exports.getAllTours = catchAsync(async (req, res, next) => {
     // }
 });
 
-exports.createNewTour = catchAsync(async (req, res, next) => {
+exports.createNewTour = catchAsync(async(req, res, next) => {
     // try {
     const newTour = await Tour.create(req.body);
 
@@ -56,10 +56,9 @@ exports.createNewTour = catchAsync(async (req, res, next) => {
     // }
 });
 
-exports.getTourById = catchAsync(async (req, res, next) => {
+exports.getTourById = catchAsync(async(req, res, next) => {
     // try {
-    // const tour = await Tour.findById(req.params.id); //* lecturer 153 to populate the guides  IDs to object users
-    const tour = await Tour.findById(req.params.id)
+    const tour = await Tour.findById(req.params.id);
 
     //if the user query a tour with an ID that does not exist throw this Error
     if (!tour) {
@@ -81,7 +80,7 @@ exports.getTourById = catchAsync(async (req, res, next) => {
     // }
 });
 
-exports.updateTour = catchAsync(async (req, res, next) => {
+exports.updateTour = catchAsync(async(req, res, next) => {
     // try {
     const tour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
         new: true,
@@ -106,7 +105,7 @@ exports.updateTour = catchAsync(async (req, res, next) => {
     // }
 });
 
-exports.deleteTour = catchAsync(async (req, res, next) => {
+exports.deleteTour = catchAsync(async(req, res, next) => {
     // try {
     const tour = await Tour.findByIdAndDelete(req.params.id);
 
@@ -128,26 +127,26 @@ exports.deleteTour = catchAsync(async (req, res, next) => {
 });
 
 // this API. we use mongoDb to check the number of tours, the number ratings, of price, ect...
-exports.getTourStats = catchAsync(async (req, res, next) => {
+exports.getTourStats = catchAsync(async(req, res, next) => {
     // try {
     const tour = await Tour.aggregate([{
-        $match: { ratingsAverage: { $gte: 4.5 } }, //$gte //=> greater or equal. these are all provided by mongoDb
-    },
-    {
-        $group: {
-            _id: { $toUpper: '$difficulty' }, // am checking the number of ratings, average, price, etc using the fields of my object called "difficulty" & u put $sign in front.
-            numTours: { $sum: 1 }, //total number of tours that has ,difficulty, easy, medium, hard ect...
-            numRatings: { $sum: '$ratingsQuantity' }, //total number of ratings
-            avgRating: { $avg: '$ratingsAverage' }, //the average rating
-            avgPrice: { $avg: '$price' }, //the average price
-            minPrice: { $min: '$price' }, //the smallest price in the tour
-            maxPrice: { $max: '$price' }, //the biggest price in tour
+            $match: { ratingsAverage: { $gte: 4.5 } }, //$gte //=> greater or equal. these are all provided by mongoDb
         },
-    },
-    //here i'm sorting the avgPrice of the above result
-    {
-        $sort: { avgPrice: 1 }, //from small to biggest price
-    },
+        {
+            $group: {
+                _id: { $toUpper: '$difficulty' }, // am checking the number of ratings, average, price, etc using the fields of my object called "difficulty" & u put $sign in front.
+                numTours: { $sum: 1 }, //total number of tours that has ,difficulty, easy, medium, hard ect...
+                numRatings: { $sum: '$ratingsQuantity' }, //total number of ratings
+                avgRating: { $avg: '$ratingsAverage' }, //the average rating
+                avgPrice: { $avg: '$price' }, //the average price
+                minPrice: { $min: '$price' }, //the smallest price in the tour
+                maxPrice: { $max: '$price' }, //the biggest price in tour
+            },
+        },
+        //here i'm sorting the avgPrice of the above result
+        {
+            $sort: { avgPrice: 1 }, //from small to biggest price
+        },
 
         //! NOTE YOU CAN HVE MULTIPLE $match, with the line bellow, before ni return the above res to the user i sai don't return the field that is equal to 'EASY' Field result.
         // {
@@ -170,50 +169,50 @@ exports.getTourStats = catchAsync(async (req, res, next) => {
     // }
 });
 
-exports.getMonthlyPlan = catchAsync(async (req, res, next) => {
+exports.getMonthlyPlan = catchAsync(async(req, res, next) => {
     // try {
     const year_parm = req.params.year; // => 2022
     const year = parseInt(year_parm);
 
     const plan = await Tour.aggregate([{
-        $unwind: '$startDates', // => [$unwind] operator is used to Deconstructs an array field from the input documents to output a document for each element
-    },
-    {
-        //? STEP 1 MATCHES
-        //this will check the tour that has the starting date of 2022-01-01 & end date of 2020-12-31
-        $match: {
-            startDates: {
-                //this is a new field name
-                $gte: new Date(`${year}-01-01`), //greater or equal 2022-01-01
-                $lte: new Date(`${year}-12-31`), //less than or equal 2022-12-31
+            $unwind: '$startDates', // => [$unwind] operator is used to Deconstructs an array field from the input documents to output a document for each element
+        },
+        {
+            //? STEP 1 MATCHES
+            //this will check the tour that has the starting date of 2022-01-01 & end date of 2020-12-31
+            $match: {
+                startDates: {
+                    //this is a new field name
+                    $gte: new Date(`${year}-01-01`), //greater or equal 2022-01-01
+                    $lte: new Date(`${year}-12-31`), //less than or equal 2022-12-31
+                },
             },
         },
-    },
-    {
-        //? STEP 2 GROUP, TO RETURN A NEW OBJECT API. this is my new object
-        $group: {
-            _id: { $month: '$startDates' }, //name of the field is now the [ID]
-            numTourStarts: { $sum: 1 }, //count the number of tour
-            tours: { $push: { name: '$name' } },
+        {
+            //? STEP 2 GROUP, TO RETURN A NEW OBJECT API. this is my new object
+            $group: {
+                _id: { $month: '$startDates' }, //name of the field is now the [ID]
+                numTourStarts: { $sum: 1 }, //count the number of tour
+                tours: { $push: { name: '$name' } },
 
-            // push the field call [$name, $summary, $description] ////{this is me}
-            // tours: { $push: { name: '$name', summary: '$summary', description: '$description' } }
+                // push the field call [$name, $summary, $description] ////{this is me}
+                // tours: { $push: { name: '$name', summary: '$summary', description: '$description' } }
+            },
         },
-    },
-    {
-        $addFields: { month: '$_id' }, // am adding another fields to my object
-    },
-    {
-        $project: {
-            _id: 0,
+        {
+            $addFields: { month: '$_id' }, // am adding another fields to my object
         },
-    },
-    {
-        $sort: { numTourStarts: -1 }, //==> [-]  in descending order
-    },
-    {
-        $limit: 12, // you can set a limit of the result
-    },
+        {
+            $project: {
+                _id: 0,
+            },
+        },
+        {
+            $sort: { numTourStarts: -1 }, //==> [-]  in descending order
+        },
+        {
+            $limit: 12, // you can set a limit of the result
+        },
     ]);
 
     res.status(200).json({
