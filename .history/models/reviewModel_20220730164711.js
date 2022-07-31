@@ -46,9 +46,8 @@ reviewSchema.pre(/^find/, function (next) {
         select: 'name'
     }).populate({
         path: 'user', //name of the foreign ID
-        select: 'name photo',
+        select: 'name , photo',
     })
-
     next();
 });
 

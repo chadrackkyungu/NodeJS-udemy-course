@@ -3,7 +3,7 @@
 //=> Parent referencing
 
 const mongoose = require('mongoose');
-const Tour = require('./tourModel');
+// const Tour = require('./tourModel');
 
 const reviewSchema = new mongoose.Schema(
     {
@@ -25,11 +25,11 @@ const reviewSchema = new mongoose.Schema(
             ref: 'Tour', // => ref The table(file name)
             required: [true, 'Review must belong to a tour.']
         },
-        user: {
-            type: mongoose.Schema.ObjectId, // => ref ID 
-            ref: 'User', // => ref table(file name)
-            required: [true, 'Review must belong to a user']
-        }
+        // user: {
+        //   type: mongoose.Schema.ObjectId, // => ref ID 
+        //   ref: 'User', // => ref table(file name)
+        //   required: [true, 'Review must belong to a user']
+        // }
     },
     {
         toJSON: { virtuals: true },
@@ -39,18 +39,13 @@ const reviewSchema = new mongoose.Schema(
 
 // reviewSchema.index({ tour: 1, user: 1 }, { unique: true });
 
-//* 1 lecturer 156
-reviewSchema.pre(/^find/, function (next) {
-    this.populate({
-        path: 'tour', //name of the  foreign ID
-        select: 'name'
-    }).populate({
-        path: 'user', //name of the foreign ID
-        select: 'name photo',
-    })
-
-    next();
-});
+// reviewSchema.pre(/^find/, function(next) {
+//   this.populate({
+//     path: 'user',
+//     select: 'name photo'
+//   });
+//   next();
+// });
 
 // reviewSchema.statics.calcAverageRatings = async function(tourId) {
 //   const stats = await this.aggregate([

@@ -3,7 +3,7 @@
 //=> Parent referencing
 
 const mongoose = require('mongoose');
-const Tour = require('./tourModel');
+// const Tour = require('./tourModel');
 
 const reviewSchema = new mongoose.Schema(
     {
@@ -46,9 +46,8 @@ reviewSchema.pre(/^find/, function (next) {
         select: 'name'
     }).populate({
         path: 'user', //name of the foreign ID
-        select: 'name photo',
+        select: 'name , photo',
     })
-
     next();
 });
 

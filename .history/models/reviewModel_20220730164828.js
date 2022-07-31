@@ -48,7 +48,6 @@ reviewSchema.pre(/^find/, function (next) {
         path: 'user', //name of the foreign ID
         select: 'name photo',
     })
-
     next();
 });
 
