@@ -16,8 +16,7 @@ router
 router
     .route('/:id')
     .get(getReview)
-    //this 2 peoples can not update or delete a review
-    .patch(protect, restrictTo('user', 'admin'), updateReview)
-    .delete(protect, restrictTo('user', 'admin'), deleteReview)
+    .patch(updateReview)
+    .delete(deleteReview)
 
 module.exports = router;

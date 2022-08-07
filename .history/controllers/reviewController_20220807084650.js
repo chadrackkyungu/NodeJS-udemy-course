@@ -1,5 +1,5 @@
 const Review = require('./../models/reviewModel');
-const { deleteOne, updateOne, createOne, getByIdOne, getAll } = require('./handlerFactory'); // write clean coe an reuse functions
+const { deleteOne, updateOne, createOne } = require('./handlerFactory'); // write clean coe an reuse functions
 const catchAsync = require('./../utils/catchAsync');
 
 // exports.setTourUserIds = (req, res, next) => {
@@ -9,31 +9,25 @@ const catchAsync = require('./../utils/catchAsync');
 //   next();
 // };
 
+exports.getAllReviews = catchAsync(async (req, res, next) => {
 
+    //using this you get all available reviews
+    // const reviews = await Review.find(); //* before lect 160
 
-//* after refactoring  100% working. lect 163
-exports.getAllReviews = getAll(Review); //delete function [get review by review ID]
+    //using this method, you will get all reviews per specific tour. //* 100% working
+    let filter = {};
+    if (req.params.tourId) filter = { tour: req.params.tourId };
+    const reviews = await Review.find(filter);
+    //end
 
-//*before refactoring
-// exports.getAllReviews = catchAsync(async (req, res, next) => {
-
-//     using this you get all available reviews
-//      const reviews = await Review.find(); //* before lect 160
-
-//     using this method, you will get all reviews per specific tour. //* 100% working
-//     let filter = {};
-//     if (req.params.tourId) filter = { tour: req.params.tourId };
-//     const reviews = await Review.find(filter);
-//     end
-
-//     res.status(200).json({
-//         status: 'success',
-//         results: reviews.length,
-//         data: {
-//             reviews
-//         }
-//     })
-// })
+    res.status(200).json({
+        status: 'success',
+        results: reviews.length,
+        data: {
+            reviews
+        }
+    })
+})
 
 
 //* after refactoring  100% working] this part here is the one bellow in green. lecturer 162
@@ -44,8 +38,6 @@ exports.setTourUserIds = (req, res, next) => {
     next()
 }
 exports.createReview = createOne(Review); //delete function //* 100% working
-
-
 
 //*before refactoring
 // exports.createReview = catchAsync(async (req, res, next) => {
@@ -67,20 +59,17 @@ exports.createReview = createOne(Review); //delete function //* 100% working
 
 
 
-//* after refactoring  100% working. lect 163
-exports.getReview = getByIdOne(Review); //delete function [get review by review ID]
 
-//*before refactoring
-// exports.getReview = catchAsync(async (req, res, next) => {
-//     const reviews = await Review.find();
-//     res.status(201).json({
-//         status: 'success',
-//         results: reviews.length,
-//         data: {
-//             reviews
-//         }
-//     })
-// })
+exports.getReview = catchAsync(async (req, res, next) => {
+    const reviews = await Review.find();
+    res.status(201).json({
+        status: 'success',
+        results: reviews.length,
+        data: {
+            reviews
+        }
+    })
+})
 
 
 //* after refactoring  100% working

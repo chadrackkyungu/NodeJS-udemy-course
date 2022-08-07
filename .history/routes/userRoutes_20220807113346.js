@@ -19,7 +19,7 @@ router.patch('/updateMe', updateMe);
 router.delete('/deleteMe', deleteMe);
 
 //* this middleware will protect this APIs from no one who is an admin to have access to them
-router.use(restrictTo('admin')) //100% working 
+router.use(restrictTo('admin'))
 
 //USER API
 router.route('/').get(getAllUsers).post(createUser);

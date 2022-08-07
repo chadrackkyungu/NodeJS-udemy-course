@@ -3,7 +3,7 @@ const Tour = require('./../models/tourModel');
 const APIFeatures = require('./../utils/apiFeatures');
 const catchAsync = require('./../utils/catchAsync');
 
-const { deleteOne, updateOne, createOne, getByIdOne, getAll } = require('./handlerFactory'); // write clean code an reuse functions. lecturer 161
+const { deleteOne, updateOne, createOne } = require('./handlerFactory'); // write clean code an reuse functions. lecturer 161
 
 
 //Functions
@@ -15,36 +15,31 @@ exports.aliasTour = async (req, res, next) => {
     next();
 };
 
+exports.getAllTours = catchAsync(async (req, res, next) => {
+    // try {
+    // EXECUTE QUERY
+    const features = new APIFeatures(Tour.find(), req.query)
+        .filter()
+        .sort()
+        .limitFields()
+        .paginate();
+    const tours = await features.query;
 
-//* refactoring 163. 100% working
-exports.getAllTours = getAll(Tour); //refactoring lect 163
-
-//* Before refactoring
-// exports.getAllTours = catchAsync(async (req, res, next) => {
-//     // try {
-//     // EXECUTE QUERY
-//     const features = new APIFeatures(Tour.find(), req.query)
-//         .filter()
-//         .sort()
-//         .limitFields()
-//         .paginate();
-//     const tours = await features.query;
-
-//     // SEND RESPONSE
-//     res.status(200).json({
-//         status: 'success',
-//         results: tours.length,
-//         data: {
-//             tours,
-//         },
-//     });
-//     // } catch (err) {
-//     //     res.status(404).json({
-//     //         status: 'fail',
-//     //         message: err
-//     //     });
-//     // }
-// });
+    // SEND RESPONSE
+    res.status(200).json({
+        status: 'success',
+        results: tours.length,
+        data: {
+            tours,
+        },
+    });
+    // } catch (err) {
+    //     res.status(404).json({
+    //         status: 'fail',
+    //         message: err
+    //     });
+    // }
+});
 
 
 
@@ -74,43 +69,34 @@ exports.createNewTour = createOne(Tour); //refactoring lect 161
 
 
 
-//* refactoring 163  1005 working
-exports.getTourById = getByIdOne(Tour, { path: 'reviews' }); //refactoring lect 163
+//* refactoring 163 
+exports.getTourById = getByIdOne(Tour); //refactoring lect 161
 //* Before refactoring
-// exports.getTourById = catchAsync(async (req, res, next) => {
-//     // try {
-//     // const tour = await Tour.findById(req.params.id); //* lecturer 153 to populate the guides  IDs to object users
-//     // const tour = await Tour.findById(req.params.id) //* get the tour with reviews using populate. [lecturer 157]
-//     const tour = await Tour.findById(req.params.id).populate('reviews');
+exports.getTourById = catchAsync(async (req, res, next) => {
+    // try {
+    // const tour = await Tour.findById(req.params.id); //* lecturer 153 to populate the guides  IDs to object users
+    // const tour = await Tour.findById(req.params.id) //* get the tour with reviews using populate. [lecturer 157]
+    const tour = await Tour.findById(req.params.id).populate('reviews');
 
-//     //if the user query a tour with an ID that does not exist throw this Error
-//     if (!tour) {
-//         return next(new AppError('No tour found with that ID', 404));
-//     }
+    //if the user query a tour with an ID that does not exist throw this Error
+    if (!tour) {
+        return next(new AppError('No tour found with that ID', 404));
+    }
 
-//     res.status(201).json({
-//         status: 'success',
-//         data: {
-//             tour,
-//         },
-//     });
+    res.status(201).json({
+        status: 'success',
+        data: {
+            tour,
+        },
+    });
 
-// } catch (error) {
-//     res.status(400).json({
-//         status: 'fail',
-//         message: 'Invalid data sent!'
-//     })
-// }
-// });
-
-
-
-
-
-
-
-
-
+    // } catch (error) {
+    //     res.status(400).json({
+    //         status: 'fail',
+    //         message: 'Invalid data sent!'
+    //     })
+    // }
+});
 
 //* refactoring 162 
 exports.updateTour = updateOne(Tour); //refactoring lect 161

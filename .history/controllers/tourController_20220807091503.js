@@ -3,7 +3,7 @@ const Tour = require('./../models/tourModel');
 const APIFeatures = require('./../utils/apiFeatures');
 const catchAsync = require('./../utils/catchAsync');
 
-const { deleteOne, updateOne, createOne, getByIdOne, getAll } = require('./handlerFactory'); // write clean code an reuse functions. lecturer 161
+const { deleteOne, updateOne, createOne, getByIdOne, getAllReviewOne } = require('./handlerFactory'); // write clean code an reuse functions. lecturer 161
 
 
 //Functions
@@ -16,8 +16,8 @@ exports.aliasTour = async (req, res, next) => {
 };
 
 
-//* refactoring 163. 100% working
-exports.getAllTours = getAll(Tour); //refactoring lect 163
+//* refactoring 163
+exports.getAllTours = getAllReviewOne(Tour); //refactoring lect 163
 
 //* Before refactoring
 // exports.getAllTours = catchAsync(async (req, res, next) => {

@@ -11,7 +11,7 @@ const filterObj = (obj, ...allowedFields) => {
     return newObj;
 };
 
-//* 100% working perfect
+//* working perfect
 exports.getAllUsers = getAll(User)
 // * before refactoring [Get all user]
 // exports.getAllUsers = catchAsync(async (req, res, next) => {
@@ -27,12 +27,6 @@ exports.getAllUsers = getAll(User)
 // })
 
 
-//* Lecturer 164
-//this API end point {middleware} will get the current user details after he/she login. so when i call this API i will get my own details after login
-exports.getMe = (req, res, next) => {
-    req.params.id = req.user.id;
-    next();
-}
 
 //* 100% Working
 //Update the user profile

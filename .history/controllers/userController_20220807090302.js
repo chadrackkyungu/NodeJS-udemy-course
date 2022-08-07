@@ -1,7 +1,7 @@
 const User = require('./../models/useModel');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
-const { deleteOne, updateOne, getByIdOne, getAll } = require('./handlerFactory'); // write clean code an reuse functions. lecturer 161
+const { deleteOne, updateOne, getByIdOne } = require('./handlerFactory'); // write clean code an reuse functions. lecturer 161
 
 const filterObj = (obj, ...allowedFields) => {
     const newObj = {};
@@ -11,28 +11,19 @@ const filterObj = (obj, ...allowedFields) => {
     return newObj;
 };
 
-//* 100% working perfect
-exports.getAllUsers = getAll(User)
-// * before refactoring [Get all user]
-// exports.getAllUsers = catchAsync(async (req, res, next) => {
-//     const users = await User.find()
 
-//     res.status(200).json({
-//         status: 'success',
-//         result: users.length,
-//         data: {
-//             users
-//         }
-//     })
-// })
+//Get all user
+exports.getAllUsers = catchAsync(async (req, res, next) => {
+    const users = await User.find()
 
-
-//* Lecturer 164
-//this API end point {middleware} will get the current user details after he/she login. so when i call this API i will get my own details after login
-exports.getMe = (req, res, next) => {
-    req.params.id = req.user.id;
-    next();
-}
+    res.status(200).json({
+        status: 'success',
+        result: users.length,
+        data: {
+            users
+        }
+    })
+})
 
 //* 100% Working
 //Update the user profile

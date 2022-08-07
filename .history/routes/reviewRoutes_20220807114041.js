@@ -9,15 +9,13 @@ router.use(protect); //protect the routes (APIs) bellow from being Access if you
 router
     .route('/')
     .get(getAllReviews)
-    //here i have 2 middleware that will execute before a review get create
-    //this middleware will allow only users to post reviews no amin or tour guid can post a reviews
-    .post(restrictTo('user'), setTourUserIds, createReview);
+    //here i have 3 middleware that will execute before a review get create
+    .post(protect, restrictTo('user'), setTourUserIds, createReview);
 
 router
     .route('/:id')
     .get(getReview)
-    //this 2 peoples can not update or delete a review
-    .patch(protect, restrictTo('user', 'admin'), updateReview)
-    .delete(protect, restrictTo('user', 'admin'), deleteReview)
+    .patch(updateReview)
+    .delete(deleteReview)
 
 module.exports = router;

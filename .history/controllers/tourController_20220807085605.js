@@ -3,7 +3,7 @@ const Tour = require('./../models/tourModel');
 const APIFeatures = require('./../utils/apiFeatures');
 const catchAsync = require('./../utils/catchAsync');
 
-const { deleteOne, updateOne, createOne, getByIdOne, getAll } = require('./handlerFactory'); // write clean code an reuse functions. lecturer 161
+const { deleteOne, updateOne, createOne, getByIdOne } = require('./handlerFactory'); // write clean code an reuse functions. lecturer 161
 
 
 //Functions
@@ -15,36 +15,31 @@ exports.aliasTour = async (req, res, next) => {
     next();
 };
 
+exports.getAllTours = catchAsync(async (req, res, next) => {
+    // try {
+    // EXECUTE QUERY
+    const features = new APIFeatures(Tour.find(), req.query)
+        .filter()
+        .sort()
+        .limitFields()
+        .paginate();
+    const tours = await features.query;
 
-//* refactoring 163. 100% working
-exports.getAllTours = getAll(Tour); //refactoring lect 163
-
-//* Before refactoring
-// exports.getAllTours = catchAsync(async (req, res, next) => {
-//     // try {
-//     // EXECUTE QUERY
-//     const features = new APIFeatures(Tour.find(), req.query)
-//         .filter()
-//         .sort()
-//         .limitFields()
-//         .paginate();
-//     const tours = await features.query;
-
-//     // SEND RESPONSE
-//     res.status(200).json({
-//         status: 'success',
-//         results: tours.length,
-//         data: {
-//             tours,
-//         },
-//     });
-//     // } catch (err) {
-//     //     res.status(404).json({
-//     //         status: 'fail',
-//     //         message: err
-//     //     });
-//     // }
-// });
+    // SEND RESPONSE
+    res.status(200).json({
+        status: 'success',
+        results: tours.length,
+        data: {
+            tours,
+        },
+    });
+    // } catch (err) {
+    //     res.status(404).json({
+    //         status: 'fail',
+    //         message: err
+    //     });
+    // }
+});
 
 
 
@@ -74,7 +69,7 @@ exports.createNewTour = createOne(Tour); //refactoring lect 161
 
 
 
-//* refactoring 163  1005 working
+//* refactoring 163 
 exports.getTourById = getByIdOne(Tour, { path: 'reviews' }); //refactoring lect 163
 //* Before refactoring
 // exports.getTourById = catchAsync(async (req, res, next) => {

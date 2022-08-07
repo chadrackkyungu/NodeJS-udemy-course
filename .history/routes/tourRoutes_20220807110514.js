@@ -18,10 +18,10 @@ router.use('/:tourId/reviews', reviewRouter)
 //[checkBody, createNewTour] this is called chaining middleware
 router.route('/top-5-cheap').get(aliasTour, getAllTours)
 router.route('/tour-stats').get(getTourStats);
-router.route('/monthly-plan/:year').get(protect, restrictTo('admin', 'lead-guide'), getMonthlyPlan);
+router.route('/monthly-plan/:year').get(getMonthlyPlan);
 
 //Note: [protect] is a middleware to protect our API if the user haven't logged in yet
-router.route('/').get(protect, getAllTours).post(protect, restrictTo('admin', 'lead-guide', 'guide'), createNewTour)
+router.route('/').get(protect, getAllTours).post(protect, restrictTo('admin', 'lead-guide'), createNewTour)
 
 //<protect> middleware, protect the user from performing a delete if he hasn't logged in 
 //<restrictTo> middleware restrict the user from deleting a tour if is not an "admin"

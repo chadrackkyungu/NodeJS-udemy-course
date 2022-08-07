@@ -28,8 +28,7 @@ exports.getAllUsers = getAll(User)
 
 
 //* Lecturer 164
-//this API end point {middleware} will get the current user details after he/she login. so when i call this API i will get my own details after login
-exports.getMe = (req, res, next) => {
+exports.geMe = (req, res, next) => {
     req.params.id = req.user.id;
     next();
 }

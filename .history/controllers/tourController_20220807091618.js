@@ -16,7 +16,7 @@ exports.aliasTour = async (req, res, next) => {
 };
 
 
-//* refactoring 163. 100% working
+//* refactoring 163
 exports.getAllTours = getAll(Tour); //refactoring lect 163
 
 //* Before refactoring

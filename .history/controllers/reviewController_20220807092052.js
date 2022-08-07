@@ -1,6 +1,6 @@
 const Review = require('./../models/reviewModel');
 const { deleteOne, updateOne, createOne, getByIdOne, getAll } = require('./handlerFactory'); // write clean coe an reuse functions
-const catchAsync = require('./../utils/catchAsync');
+// const catchAsync = require('./../utils/catchAsync');
 
 // exports.setTourUserIds = (req, res, next) => {
 //   // Allow nested routes
