@@ -134,7 +134,7 @@ tourSchema.index({ price: 1, ratingsAverage: -1 }) // this will filter these 2 f
 tourSchema.index({ slug: 1 })
 
 //* lecturer 171 Geolocation
-tourSchema.index({ startLocation: '2dsphere' })
+// tourSchema.index({ startLocation: '2dsphere' })
 
 
 

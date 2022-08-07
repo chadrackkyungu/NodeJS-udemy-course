@@ -39,7 +39,6 @@ const reviewSchema = new mongoose.Schema(
 
 //* lecturer 170 
 // Here i'm preventing the user to create multiple reviews on the same tour
-//The lecturer says this can work maybe after a day, so do not  scared the code is perfect
 reviewSchema.index({ tour: 1, user: 1 }, { unique: true });
 
 //* 1 lecturer 156

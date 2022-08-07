@@ -313,15 +313,15 @@ exports.getDistances = catchAsync(async (req, res, next) => {
                     coordinates: [lng * 1, lat * 1]
                 },
                 distanceField: 'distance',
-                distanceMultiplier: multiplier
+                // distanceMultiplier: multiplier
             }
         },
-        {
-            $project: {
-                distance: 1,
-                name: 1
-            }
-        }
+        // {
+        //     $project: {
+        //         distance: 1,
+        //         name: 1
+        //     }
+        // }
     ]);
 
     res.status(200).json({

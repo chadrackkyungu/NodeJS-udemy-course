@@ -209,23 +209,20 @@ tourSchema.post(/^find/, function (docs, next) {
 });
 
 // AGGREGATION MIDDLEWARE
-//* This get comment out in lecturer 172
-// tourSchema.pre('aggregate', function (next) {
-//     this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
+tourSchema.pre('aggregate', function (next) {
+    this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
 
-//     console.log(this.pipeline());
-//     next();
-// });
-
+    console.log(this.pipeline());
+    next();
+});
 
 // AGGREGATION MIDDLEWARE
-//* This get comment out in lecturer 172
-// tourSchema.pre('aggregate', function (next) {
-//     this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
+tourSchema.pre('aggregate', function (next) {
+    this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
 
-//     console.log(this.pipeline());
-//     next();
-// });
+    console.log(this.pipeline());
+    next();
+});
 
 const Tour = mongoose.model('Tours', tourSchema)
 

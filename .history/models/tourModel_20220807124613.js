@@ -36,7 +36,7 @@ const tourSchema = new mongoose.Schema({
         type: Number,
         default: 4.5,
         min: [1, 'Rating must be above 1.0'],
-        max: [5, 'Rating must be below 5.0'],
+        max: [5, 'Rating must be below 5.0']
     },
     ratingsQuantity: {
         type: Number,
@@ -131,12 +131,6 @@ const tourSchema = new mongoose.Schema({
 
 //*lect 167
 tourSchema.index({ price: 1, ratingsAverage: -1 }) // this will filter these 2 fields in ascending & descending order
-tourSchema.index({ slug: 1 })
-
-//* lecturer 171 Geolocation
-tourSchema.index({ startLocation: '2dsphere' })
-
-
 
 //when u do get all tour request u will see the duration field been added to our API
 tourSchema.virtual('durationWeeks').get(function () {
@@ -209,23 +203,20 @@ tourSchema.post(/^find/, function (docs, next) {
 });
 
 // AGGREGATION MIDDLEWARE
-//* This get comment out in lecturer 172
-// tourSchema.pre('aggregate', function (next) {
-//     this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
+tourSchema.pre('aggregate', function (next) {
+    this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
 
-//     console.log(this.pipeline());
-//     next();
-// });
-
+    console.log(this.pipeline());
+    next();
+});
 
 // AGGREGATION MIDDLEWARE
-//* This get comment out in lecturer 172
-// tourSchema.pre('aggregate', function (next) {
-//     this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
+tourSchema.pre('aggregate', function (next) {
+    this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
 
-//     console.log(this.pipeline());
-//     next();
-// });
+    console.log(this.pipeline());
+    next();
+});
 
 const Tour = mongoose.model('Tours', tourSchema)
 

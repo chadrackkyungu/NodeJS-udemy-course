@@ -37,10 +37,7 @@ const reviewSchema = new mongoose.Schema(
     }
 );
 
-//* lecturer 170 
-// Here i'm preventing the user to create multiple reviews on the same tour
-//The lecturer says this can work maybe after a day, so do not  scared the code is perfect
-reviewSchema.index({ tour: 1, user: 1 }, { unique: true });
+// reviewSchema.index({ tour: 1, user: 1 }, { unique: true });
 
 //* 1 lecturer 156
 // reviewSchema.pre(/^find/, function (next) {
@@ -62,6 +59,8 @@ reviewSchema.pre(/^find/, function (next) {
     })
     next();
 });
+
+
 
 //* Calculate the Average lecturer 168
 //this will calculate the numb of rating each time the user create a review for a tour
@@ -93,23 +92,24 @@ reviewSchema.statics.calcAverageRatings = async function (tourId) {
     }
 };
 
-//* 168
 reviewSchema.post('save', function () {
     this.constructor.calcAverageRatings(this.tour);
 });
 
-//* 169
-reviewSchema.pre(/^findOneAnd/, async function (next) {
-    // this.r = await this.findOne(); //* from the lecturer 
-    this.r = await this.findOne().clone(); //* me after debugging
-    next();
-});
 
-// //* 169 
-reviewSchema.post(/^findOneAnd/, async function () {
-    await this.r.constructor.calcAverageRatings(this.r.tour)
-});
+// reviewSchema.post('save', function() {
+//   this.constructor.calcAverageRatings(this.tour);
+// });
+
+
+// reviewSchema.pre(/^findOneAnd/, async function(next) {
+//   this.r = await this.findOne();
+//   next();
+// });
+
+// reviewSchema.post(/^findOneAnd/, async function() {
+//   await this.r.constructor.calcAverageRatings(this.r.tour);
+// });
 
 const Review = mongoose.model('Review', reviewSchema);
-
 module.exports = Review;

@@ -20,7 +20,7 @@ router.route('/top-5-cheap').get(aliasTour, getAllTours)
 router.route('/tour-stats').get(getTourStats);
 router.route('/monthly-plan/:year').get(protect, restrictTo('admin', 'lead-guide'), getMonthlyPlan);
 
-//This is the Geo Spatial API end point //* 171 & 172
+//This is the Geo Spatial API end point
 router.route('/tours-within/:distance/center/:latlng/unit/:unit').get(getToursWithin)
 router.route('/distances/:latlng/unit/:unit').get(getDistances)
 
