@@ -3,7 +3,7 @@ const Tour = require('./../models/tourModel');
 const APIFeatures = require('./../utils/apiFeatures');
 const catchAsync = require('./../utils/catchAsync');
 
-const { deleteOne, updateOne, createOne } = require('./handlerFactory'); // write clean code an reuse functions. lecturer 161
+const { deleteOne, updateOne } = require('./handlerFactory'); // write clean code an reuse functions. lecturer 161
 
 
 //Functions
@@ -41,28 +41,23 @@ exports.getAllTours = catchAsync(async (req, res, next) => {
     // }
 });
 
+exports.createNewTour = catchAsync(async (req, res, next) => {
+    // try {
+    const newTour = await Tour.create(req.body);
 
-
-//* refactoring 162 
-exports.createNewTour = createOne(Tour); //refactoring lect 161
-//* Before refactoring
-// exports.createNewTour = catchAsync(async (req, res, next) => {
-//     // try {
-//     const newTour = await Tour.create(req.body);
-
-//     res.status(201).json({
-//         status: 'success',
-//         data: {
-//             tour: newTour,
-//         },
-//     });
-//     // } catch (error) {
-//     //     res.status(400).json({
-//     //         status: 'fail',
-//     //         message: `${error}Invalid data sent!`
-//     //     })
-//     // }
-// });
+    res.status(201).json({
+        status: 'success',
+        data: {
+            tour: newTour,
+        },
+    });
+    // } catch (error) {
+    //     res.status(400).json({
+    //         status: 'fail',
+    //         message: `${error}Invalid data sent!`
+    //     })
+    // }
+});
 
 exports.getTourById = catchAsync(async (req, res, next) => {
     // try {

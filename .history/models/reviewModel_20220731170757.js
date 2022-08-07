@@ -3,7 +3,7 @@
 //=> Parent referencing
 
 const mongoose = require('mongoose');
-// const Tour = require('./tourModel');
+const Tour = require('./tourModel');
 
 const reviewSchema = new mongoose.Schema(
     {
@@ -48,17 +48,9 @@ const reviewSchema = new mongoose.Schema(
 //         path: 'user', //name of the foreign ID
 //         select: 'name photo',
 //     })
+
 //     next();
 // });
-
-//* 1 lecturer 157
-reviewSchema.pre(/^find/, function (next) {
-    this.populate({
-        path: 'user', //name of the foreign ID
-        select: 'name photo',
-    })
-    next();
-});
 
 // reviewSchema.statics.calcAverageRatings = async function(tourId) {
 //   const stats = await this.aggregate([
@@ -102,4 +94,5 @@ reviewSchema.pre(/^find/, function (next) {
 // });
 
 const Review = mongoose.model('Review', reviewSchema);
+
 module.exports = Review;

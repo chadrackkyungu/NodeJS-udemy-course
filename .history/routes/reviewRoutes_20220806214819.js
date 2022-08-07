@@ -13,8 +13,9 @@ router
 
 router
     .route('/:id')
-    .patch(updateReview)
-    .delete(deleteReview)
+    .delete(deleteReview);
+
+
 
 // router
 //     .route('/:id')

@@ -1,5 +1,5 @@
 const Review = require('./../models/reviewModel');
-const { deleteOne, updateOne } = require('./handlerFactory'); // write clean coe an reuse functions
+const factory = require('./handlerFactory'); // write clean coe an reuse functions
 const catchAsync = require('./../utils/catchAsync');
 
 // exports.setTourUserIds = (req, res, next) => {
@@ -58,36 +58,27 @@ exports.getReview = catchAsync(async (req, res, next) => {
     })
 })
 
+exports.updateReview = catchAsync(async (req, res, next) => {
+    const newReview = await Review.create(req.body);
+    res.status(201).json({
+        status: 'success',
+        results: newReview.length,
+        data: {
+            reviews: newReview
+        }
+    })
+})
 
-//* after refactoring  100% working
-exports.updateReview = updateOne(Review); //delete function
-
-//*before refactoring
-// exports.updateReview = catchAsync(async (req, res, next) => {
-//     const newReview = await Review.create(req.body);
-//     res.status(201).json({
-//         status: 'success',
-//         results: newReview.length,
-//         data: {
-//             reviews: newReview
-//         }
-//     })
-// })
-
-//* after refactoring 
-exports.deleteReview = deleteOne(Review); //delete function
-
-//*before refactoring
-// exports.deleteReview = catchAsync(async (req, res, next) => {
-//     const newReview = await Review.create(req.body);
-//     res.status(201).json({
-//         status: 'success',
-//         results: newReview.length,
-//         data: {
-//             reviews: newReview
-//         }
-//     })
-// })
+exports.deleteReview = catchAsync(async (req, res, next) => {
+    const newReview = await Review.create(req.body);
+    res.status(201).json({
+        status: 'success',
+        results: newReview.length,
+        data: {
+            reviews: newReview
+        }
+    })
+})
 
 
 // exports.getAllReviews = factory.getAll(Review);

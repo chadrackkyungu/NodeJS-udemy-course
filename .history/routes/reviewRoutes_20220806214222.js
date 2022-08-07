@@ -11,11 +11,7 @@ router
     .get(getAllReviews)
     .post(protect, createReview);
 
-router
-    .route('/:id')
-    .patch(updateReview)
-    .delete(deleteReview)
-
+router.route('./:id').delete(deleteReview);
 // router
 //     .route('/:id')
 //     .get(getReview)

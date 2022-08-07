@@ -134,10 +134,10 @@ tourSchema.virtual('durationWeeks').get(function () {
     return this.duration / 7; //days divide by 7
 });
 
-//* Lecturer 157 <virtual populate> 
-// connecting The review model to tour model. [keeping a reference to all child documents] means keeping the tour ID in each reviews
+// Lecturer 157
+// connecting The review model to tour model
 tourSchema.virtual('reviews', {
-    ref: 'Review', //[Review] is the name of my Review Schema model
+    ref: 'Review',
     foreignField: 'tour', //this is the name of the field inside reviewModel.js
     localField: '_id'
 })

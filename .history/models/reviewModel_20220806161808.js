@@ -103,3 +103,6 @@ reviewSchema.pre(/^find/, function (next) {
 
 const Review = mongoose.model('Review', reviewSchema);
 module.exports = Review;
+
+//THIS IS WHAT WE CALL NESTED ROUTE
+//!! POST /tour/254far/reviews 

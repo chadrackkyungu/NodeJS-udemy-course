@@ -5,13 +5,10 @@ const { getAllTours, createNewTour, getTourById, updateTour, deleteTour, aliasTo
 
 //this Middleware  will execute to protect our routes if the user haven't login yet
 const { protect, restrictTo } = require('../controllers/authController')
-const reviewRouter = require('./../routes/reviewRoutes');
+const { createReview } = require('../controllers/reviewController');
 
 //(2) init Routes
 const router = express.Router()
-
-//This is the review routes //* lecturer 159
-router.use('/:tourId/reviews', reviewRouter)
 
 // (3) All our routes
 //TOUR API GET & POST METHOD
@@ -35,9 +32,12 @@ router.route('/:id').get(getTourById).patch(updateTour).delete(protect, restrict
 //* POST /tour/254far/reviews 
 //* GET /tour/254far/reviews 
 //* GET by ID  /tour/254far/reviews/id596
-//* this is a bad practice
-// router
-//     .route('/:tourId/reviews') // real world http://api/v1/tours/62e4cd89959c77d481935520/reviews // this is [62e4cd89959c77d481935520] the tour ID
-//     .post(protect, restrictTo('user'), createReview) //create a new review, only if u are a user, if not, u are restricted
+router
+    .route('/:tourId/reviews')
+    .post(
+        protect,
+        restrictTo('user'),
+        createReview
+    )
 
 module.exports = router

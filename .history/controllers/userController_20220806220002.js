@@ -1,7 +1,7 @@
 const User = require('./../models/useModel');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
-const { deleteOne, updateOne } = require('./handlerFactory'); // write clean code an reuse functions. lecturer 161
+const { deleteOne } = require('./handlerFactory'); // write clean code an reuse functions. lecturer 161
 
 const filterObj = (obj, ...allowedFields) => {
     const newObj = {};
@@ -68,18 +68,14 @@ exports.createUser = (req, res) => {
 exports.getUser = (req, res) => {
     res.status(500).json({ status: 'error', message: "this route is not yet defined" })
 }
-
-
-//* refactoring
-exports.updateUser = updateOne(User) // Do not update passwords with this!
-// exports.updateUser = (req, res) => {
-//     res.status(500).json({ status: 'error', message: "this route is not yet defined" })
-// }
+exports.updateUser = (req, res) => {
+    res.status(500).json({ status: 'error', message: "this route is not yet defined" })
+}
 
 
 
 //* refactoring 161
-exports.deleteUser = deleteOne(User); //* 100% working
+exports.deleteUser = deleteOne(User);
 
 //before refactoring
 // exports.deleteUser = (req, res) => {

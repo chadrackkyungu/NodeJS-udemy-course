@@ -59,7 +59,7 @@ exports.getReview = catchAsync(async (req, res, next) => {
 })
 
 
-//* after refactoring  100% working
+//* after refactoring 
 exports.updateReview = updateOne(Review); //delete function
 
 //*before refactoring

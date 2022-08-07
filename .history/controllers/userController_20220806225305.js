@@ -1,7 +1,7 @@
 const User = require('./../models/useModel');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
-const { deleteOne, updateOne } = require('./handlerFactory'); // write clean code an reuse functions. lecturer 161
+const { deleteOne } = require('./handlerFactory'); // write clean code an reuse functions. lecturer 161
 
 const filterObj = (obj, ...allowedFields) => {
     const newObj = {};

@@ -3,9 +3,6 @@ const Tour = require('./../models/tourModel');
 const APIFeatures = require('./../utils/apiFeatures');
 const catchAsync = require('./../utils/catchAsync');
 
-const { deleteOne, updateOne, createOne } = require('./handlerFactory'); // write clean code an reuse functions. lecturer 161
-
-
 //Functions
 exports.aliasTour = async (req, res, next) => {
     req.query.limit = '5'; //i'm making a request of 5 fields only not the all API object
@@ -41,28 +38,23 @@ exports.getAllTours = catchAsync(async (req, res, next) => {
     // }
 });
 
+exports.createNewTour = catchAsync(async (req, res, next) => {
+    // try {
+    const newTour = await Tour.create(req.body);
 
-
-//* refactoring 162 
-exports.createNewTour = createOne(Tour); //refactoring lect 161
-//* Before refactoring
-// exports.createNewTour = catchAsync(async (req, res, next) => {
-//     // try {
-//     const newTour = await Tour.create(req.body);
-
-//     res.status(201).json({
-//         status: 'success',
-//         data: {
-//             tour: newTour,
-//         },
-//     });
-//     // } catch (error) {
-//     //     res.status(400).json({
-//     //         status: 'fail',
-//     //         message: `${error}Invalid data sent!`
-//     //     })
-//     // }
-// });
+    res.status(201).json({
+        status: 'success',
+        data: {
+            tour: newTour,
+        },
+    });
+    // } catch (error) {
+    //     res.status(400).json({
+    //         status: 'fail',
+    //         message: `${error}Invalid data sent!`
+    //     })
+    // }
+});
 
 exports.getTourById = catchAsync(async (req, res, next) => {
     // try {
@@ -90,59 +82,51 @@ exports.getTourById = catchAsync(async (req, res, next) => {
     // }
 });
 
-//* refactoring 162 
-exports.updateTour = updateOne(Tour); //refactoring lect 161
-//* Before refactoring
-// exports.updateTour = catchAsync(async (req, res, next) => {
-//     // try {
-//     const tour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
-//         new: true,
-//         runValidators: true,
-//     });
+exports.updateTour = catchAsync(async (req, res, next) => {
+    // try {
+    const tour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+        runValidators: true,
+    });
 
-//     if (!tour) {
-//         return next(new AppError('No tour found with that ID', 404));
-//     }
+    if (!tour) {
+        return next(new AppError('No tour found with that ID', 404));
+    }
 
-//     res.status(200).json({
-//         status: 'success',
-//         data: {
-//             tour,
-//         },
-//     });
-//     // } catch (err) {
-//     //     res.status(404).json({
-//     //         status: 'fail',
-//     //         message: err
-//     //     });
-//     // }
-// });
+    res.status(200).json({
+        status: 'success',
+        data: {
+            tour,
+        },
+    });
+    // } catch (err) {
+    //     res.status(404).json({
+    //         status: 'fail',
+    //         message: err
+    //     });
+    // }
+});
 
-exports.deleteTour = deleteOne(Tour); //refactoring lect 161
+exports.deleteTour = catchAsync(async (req, res, next) => {
+    // try {
+    const tour = await Tour.findByIdAndDelete(req.params.id);
 
-//* This is before refactoring. 
-// exports.deleteTour = catchAsync(async (req, res, next) => {
-//     // try {
-//     const tour = await Tour.findByIdAndDelete(req.params.id);
+    if (!tour) {
+        return next(new AppError('No tour found with that ID', 404));
+    }
 
-//     if (!tour) {
-//         return next(new AppError('No tour found with that ID', 404));
-//     }
+    res.status(204).json({
+        status: 'success',
+        data: null,
+    });
 
-//     res.status(204).json({
-//         status: 'success',
-//         data: null,
-//     });
-
-//     // } catch (err) {
-//     //     res.status(404).json({
-//     //         status: 'fail',
-//     //         message: err
-//     //     });
-//     // }
-// });
-
-
+    // } catch (err) {
+    //     res.status(404).json({
+    //         status: 'fail',
+    //         message: err
+    //     });
+    // }
+});
 
 // this API. we use mongoDb to check the number of tours, the number ratings, of price, ect...
 exports.getTourStats = catchAsync(async (req, res, next) => {
