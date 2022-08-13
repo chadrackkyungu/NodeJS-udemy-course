@@ -1,0 +1,67 @@
+GET STARTED
+===========
+1 //=> npm init -y
+2 //=> npm i --save express
+3 //=> npm i nodemon
+3 //=> npm i dotenv  
+3 //=> npm i morgan  
+//=> npm i npm i nodemailer
+//=> npm i express-rate-limit # this package managed the user how many time he / she attempts to login
+//=> npm i helmet #always use this package in all your application
+//=> npm i express-mongo-sanitize # For protecting against NoSQL injection
+//=> npm i xss-clean
+//=> npm i hpp #for avoiding hpp(paramter) uplication Errors
+//=> npm i cookie-parser
+//=> npm i parcel-bundler --save-dev
+
+
+//Dev Dependencies
+===================
+npm => eslint
+npm => eslint-config-airbnb
+npm => eslint-config-prettier
+npm => eslint-plugin-import
+npm => eslint-plugin-jsx-a11y
+npm => eslint-plugin-node
+npm => eslint-plugin-prettier
+npm => eslint-plugin-react
+npm => prettier
+
+4 create a file call app.js
+5 added this {  "type": "module" } inside the file package.json  NOTE : u added this only if u wanna use ES6 Module , like import ...
+6 this => {npm i --save-dev nodemon}
+7 added this { "start": "nodemon app.j" } inside the file package.json
+
+
+Links to mongodb everthing we have been learning are here
+---------------------------------------------------------
+https://www.mongodb.com/docs/manual/crud/
+https://www.mongodb.com/resources/channel/use-cases
+
+
+Link to myMongo Db Course
+-------------------------
+https://university.mongodb.com/mercury/M001/2022_July_12/chapter/Chapter_1_What_is_MongoDB_/lesson/5f32de1904e9ffc005bcf6a6/lecture
+
+
+Mongoose
+--------
+https://mongoosejs.com/docs/index.html
+
+
+For debuging
+============
+//=> npm i ndb --global
+//= >npm install -g ndb    
+To open the tool => [ndb .] it Enter
+
+
+Mongo DB Authentication course Link
+-------------------------------------
+// => https://university.mongodb.com/courses/M150/about
+// => https://university.mongodb.com/dashboard
+
+
+For Reseting  emails 
+---------------------
+// => https://mailtrap.io/inboxes/1830432/messages
