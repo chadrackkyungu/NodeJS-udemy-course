@@ -10,10 +10,7 @@ const router = express.Router();
 
 //* lecturer 182.   rendered front-end
 // router.get('/', isLoggedIn, getOverview);
-router.get('/',
-    createBookingCheckout,  //* 214 only this part here
-    isLoggedIn,
-    getOverview);
+router.get('/', createBookingCheckout, isLoggedIn, getOverview); //* 214
 //*before
 //router.get('/tour/:slug', protect, getTour) //Note: [protect middleware] prevent the user from accessing this route if he delete the cookie in is browser 
 router.get('/tour/:slug', isLoggedIn, getTour) //*194 
